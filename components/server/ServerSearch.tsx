@@ -41,13 +41,14 @@ const ServerSearch = ({ data }: Props) => {
     return () => document.removeEventListener("keydown", down)
   }, [])
 
-  const onClick = (id: string, type:"channel" | "member") => {
+  const onClick = ({id, type}:{id: string, type:"channel" | "member"}) => {
     setOpen(false)
-    if (type == "member") {
+    if (type === "member") {
+        console.log("test")
         return router.push(`/servers/${params?.serverId}/conversations/${id}`)
     }
 
-    if (type == "channel") {
+    if (type === "channel") {
         return router.push(`/servers/${params?.serverId}/channels/${id}`)
     }
   }
@@ -76,7 +77,7 @@ const ServerSearch = ({ data }: Props) => {
               <CommandGroup key={label} heading={label}>
                 {data?.map(({ name, id, icon }) => {
                   return (
-                    <CommandItem key={id} onClick={() => onClick(id, type)}>
+                    <CommandItem key={id} onSelect={() => onClick({id, type})}>
                       {icon} <span className="inline-block">{name}</span>
                     </CommandItem>
                   );
